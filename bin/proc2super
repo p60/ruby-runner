@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+cat << CONF
+[supervisord]
+loglevel=debug
+nodaemon=true
+
+CONF
+
+while read line || [ -n "$line" ]
+do
+  if [[ "$line" =~ ^([A-Za-z0-9_-]+):\s*(.+)$ ]]
+  then
+    name=${line%%:*}
+    command=${line#*: }
+    cat << CONF
+[program:${name}]
+command=/bin/sh -c "${command}"
+autostart=true
+autorestart=true
+stopsignal=QUIT
+
+CONF
+  fi
+done
+
