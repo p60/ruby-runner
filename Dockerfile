@@ -4,6 +4,10 @@ FROM ubuntu:trusty
 
 MAINTAINER statianzo
 
+ENV PATH /app/bin:/app/vendor/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PORT 5000
+EXPOSE 5000
+
 RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive && \
     apt-get update     -y && \
     apt-get install     -y   \
@@ -18,16 +22,25 @@ RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive && \
     libxml2-dev              \
     libxslt-dev              \
     zlib1g-dev               \
-    libbz2-dev            && \
+    libbz2-dev               \
+    libpq-dev                \
+    libsqlite3-dev           \
+    nodejs                && \
     apt-get clean
 
-RUN useradd -m -s /bin/bash builder && \
+# Make node available as "node"
+RUN ln -s /usr/bin/nodejs /usr/local/bin/node
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+
+RUN useradd --no-create-home builder && \
     chgrp -R builder /usr/local && \
     find /usr/local -type d | xargs chmod g+w && \
     echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/builder && \
     chmod 0440 /etc/sudoers.d/builder
 
-RUN useradd -m -s /bin/bash app
+RUN useradd --no-create-home app
 
 ADD /bin/proc2super /usr/local/bin/
 
