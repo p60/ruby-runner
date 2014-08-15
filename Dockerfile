@@ -55,4 +55,4 @@ RUN cd /tmp;                           \
     ./bin/ruby-build 2.1.2 /usr/local; \
     cd; rm -rf /tmp/ruby-build*
 
-RUN gem install bundler --no-rdoc --no-ri
+RUN gem install bundler -v 1.6.5 --no-rdoc --no-ri
