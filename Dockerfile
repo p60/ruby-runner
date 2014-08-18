@@ -6,9 +6,14 @@ MAINTAINER statianzo
 
 ENV PATH /app/bin:/app/vendor/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV PORT 5000
+ENV DEBIAN_FRONTEND noninteractive
 EXPOSE 5000
 
-RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive && \
+RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
+RUN echo "exit 101" > /usr/sbin/policy-rc.d
+RUN echo 'DPkg::Post-Invoke {"/bin/rm -f /var/cache/apt/archives/*.deb || true";};' > /etc/apt/apt.conf.d/no-cache
+
+RUN LC_ALL=C \
     apt-get update     -y && \
     apt-get install     -y   \
     sudo                     \
