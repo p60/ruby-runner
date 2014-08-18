@@ -28,6 +28,8 @@ RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive && \
     nodejs                && \
     apt-get clean
 
+RUN rm -rf /var/cache/apt/* /var/lib/apt/lists/*
+
 # Make node available as "node"
 RUN ln -s /usr/bin/nodejs /usr/local/bin/node
 
