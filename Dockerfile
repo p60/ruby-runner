@@ -48,7 +48,7 @@ ADD /bin/proc2super /usr/local/bin/
 
 USER builder
 
-ADD https://github.com/sstephenson/ruby-build/archive/v20140524.tar.gz /tmp/
+ADD https://github.com/sstephenson/ruby-build/archive/v20140702.tar.gz /tmp/
 
 RUN cd /tmp;                           \
     sudo chown builder: *.tar.gz;      \
