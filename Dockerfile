@@ -13,8 +13,11 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
 RUN echo "exit 101" > /usr/sbin/policy-rc.d
 RUN echo 'DPkg::Post-Invoke {"/bin/rm -f /var/cache/apt/archives/*.deb || true";};' > /etc/apt/apt.conf.d/no-cache
 
+RUN apt-get update
+
+RUN apt-get upgrade -y
+
 RUN LC_ALL=C \
-    apt-get update     -y && \
     apt-get install     -y   \
     sudo                     \
     git                      \
