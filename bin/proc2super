@@ -2,9 +2,53 @@
 
 set -e
 
+usage(){
+  cat <<USAGE
+Usage: proc2super [options]
+Reads Procfile from stdin and writes supervisord to stdout
+
+valid options:
+-h  show this help
+-k  SIGNAL supervisor stopsignal
+-l  LOGLEVEL [critical,error,warn,info,debug]
+-s  use syslog
+USAGE
+}
+
+
+OPTIND=1
+programextras=""
+loglevel=""
+stopsignal="QUIT"
+
+while getopts "hk:l:s" opt; do
+  case "$opt" in
+  k)
+    stopsignal="$OPTARG"
+    ;;
+  l)
+    loglevel="$OPTARG"
+    ;;
+  s)
+    loglevel=${loglevel:-info}
+    programextras+=$'stdout_logfile=syslog\n'
+    programextras+=$'stderr_logfile=syslog\n'
+    ;;
+  h|*)
+    usage
+    exit 1
+    ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+loglevel=${loglevel:-debug}
+
+
 cat << CONF
 [supervisord]
-loglevel=debug
+loglevel=${loglevel}
 nodaemon=true
 
 CONF
@@ -20,7 +64,8 @@ do
 command=/bin/sh -c "${command}"
 autostart=true
 autorestart=true
-stopsignal=QUIT
+stopsignal=${stopsignal}
+${programextras}
 
 CONF
   fi
