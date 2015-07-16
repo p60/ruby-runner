@@ -1,6 +1,6 @@
 FROM ubuntu:14.04.2
 
-MAINTAINER statianzo
+MAINTAINER peer60
 
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
 RUN echo "exit 101" > /usr/sbin/policy-rc.d
