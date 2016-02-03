@@ -42,8 +42,11 @@ function dependencies() {
             npm
 }
 
-function updatenpm() {
-    npm install -g npm@2.13.5
+function updatenode() {
+    npm cache clean -f
+    npm install -g npm@3.6.0
+    npm install -g n@2.1.0
+    n 5.4.1
 }
 
 function linknode() {
@@ -85,7 +88,7 @@ noautostart
 aptupgrade
 dependencies
 linknode
-updatenpm
+updatenode
 genlocale
 builderuser
 export -f installruby
