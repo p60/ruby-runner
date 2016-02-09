@@ -28,6 +28,7 @@ function dependencies() {
             curl            \
             build-essential \
             autoconf        \
+            imagemagick     \
             libreadline-dev \
             libssl-dev      \
             libxml2-dev     \
