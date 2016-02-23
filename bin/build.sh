@@ -19,7 +19,6 @@ function aptcleanup() {
     echo 'DPkg::Post-Invoke {"/bin/rm -rf /var/cache/apt/* /var/lib/apt/lists/* || true";};' > /etc/apt/apt.conf.d/no-cache
 }
 
-
 function dependencies() {
     LC_ALL=C
     apt-get install     -y  \
@@ -68,12 +67,12 @@ function builderuser() {
 
 function installruby() {
     # These are here because this runs in a nested shell
-    ruby_version=2.2
-    ruby_install_sha=28e6703e17be70c1dcdc9499804355a3a41c90da
-    bundler_version=1.10.5
+    ruby_version=2.3
+    ruby_installer_sha=28e6703e17be70c1dcdc9499804355a3a41c90da
+    bundler_version=1.11.2
 
     cd /tmp
-    curl -L -o ruby-install.tar.gz https://github.com/postmodern/ruby-install/archive/${ruby_install_sha}.tar.gz
+    curl -L -o ruby-install.tar.gz https://github.com/postmodern/ruby-install/archive/${ruby_installer_sha}.tar.gz
     tar xzf ruby-install.tar.gz
     rm -f ruby-install.tar.gz
     cd ruby-install*
