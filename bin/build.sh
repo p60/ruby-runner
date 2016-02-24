@@ -67,7 +67,7 @@ function builderuser() {
 
 function installruby() {
     # These are here because this runs in a nested shell
-    ruby_version=2.3
+    ruby_version=2.3.0
     ruby_installer_sha=28e6703e17be70c1dcdc9499804355a3a41c90da
     bundler_version=1.11.2
 
