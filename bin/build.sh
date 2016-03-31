@@ -57,6 +57,7 @@ function genlocale() {
     locale-gen en_US.UTF-8
     LANG=en_US.UTF-8
 }
+
 function builderuser() {
     useradd builder --create-home
     chgrp -R builder /usr/local
@@ -83,6 +84,10 @@ function installruby() {
     gem install bundler -v ${bundler_version} --no-rdoc --no-ri
 }
 
+function installtrustedcertificateauthorities() {
+    curl --create-dirs -o $HOME/.postgresql/root.crt http://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+}
+
 aptspeedup
 noautostart
 aptupgrade
@@ -91,6 +96,7 @@ linknode
 updatenode
 genlocale
 builderuser
+installtrustedcertificateauthorities
 export -f installruby
 su builder -c installruby
 aptcleanup
