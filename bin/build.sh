@@ -46,6 +46,7 @@ function updatenode() {
     npm cache clean -f
     npm install -g npm@3.6.0
     npm install -g n@2.1.0
+    npm install -g yarn@0.17.9
     n 5.4.1
 }
 
