@@ -87,7 +87,7 @@ function installruby() {
 }
 
 function installtrustedcertificateauthorities() {
-    curl --create-dirs -o $HOME/.postgresql/root.crt http://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+    curl --create-dirs -o $HOME/.postgresql/root.crt https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem
 }
 
 aptspeedup
