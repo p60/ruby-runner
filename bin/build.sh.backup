@@ -27,11 +27,10 @@ function dependencies() {
             git             \
             curl            \
             build-essential \
-            apt-utils       \
             autoconf        \
             imagemagick     \
             libreadline-dev \
-            libssl1.0-dev   \
+            libssl-dev      \
             libxml2-dev     \
             libxslt-dev     \
             zlib1g-dev      \
@@ -40,7 +39,6 @@ function dependencies() {
             libsqlite3-dev  \
             libfreetype6    \
             libfontconfig   \
-            locales         \
             nodejs          \
             npm
 }
@@ -49,10 +47,8 @@ function updatenode() {
     npm cache clean -f
     npm install -g npm@5.3.0
     npm install -g n@2.1.0
-    # npm install -g npm@12.16.1
-    # npm install -g n@12.16.1
     npm install -g yarn@0.17.9
-    n 8.10.0
+    n 8.9.1
 }
 
 function linknode() {
@@ -77,7 +73,7 @@ function installruby() {
     ruby_version=2.3.0
     ruby_installer_sha=28e6703e17be70c1dcdc9499804355a3a41c90da
     bundler_version=1.11.2
-    apt-get install libssl1.0-dev
+
     cd /tmp
     curl -L -o ruby-install.tar.gz https://github.com/postmodern/ruby-install/archive/${ruby_installer_sha}.tar.gz
     tar xzf ruby-install.tar.gz
@@ -88,33 +84,6 @@ function installruby() {
     rm -rf /tmp/ruby-install*
     rm -rf /home/builder/src
     gem install bundler -v ${bundler_version} --no-rdoc --no-ri
-}
-
-function installrubynew(){
-  curl -L -o openssl-1.0.2s.tar.gz  https://www.openssl.org/source/openssl-1.0.2s.tar.gz
-  tar xvzf openssl-1.0.2s.tar.gz
-  cd openssl-1.0.2s
-  mkdir ~/.rubies && mkdir ~/.rubies/openssl-1.0.2s
-  ./config --prefix=$HOME/.rubies/openssl-1.0.2s --shared
-  make
-  make install
-  rmdir $HOME/.rubies/openssl-1.0.2s/ssl/certs
-  ln -s /usr/lib/ssl/certs $HOME/.rubies/openssl-1.0.2s/ssl/certs
-
-  ruby_version=2.3.0
-  ruby_installer_sha=28e6703e17be70c1dcdc9499804355a3a41c90da
-  bundler_version=1.11.2
-  apt-get install libssl1.0-dev
-  cd /tmp
-  curl -L -o ruby-install.tar.gz https://github.com/postmodern/ruby-install/archive/${ruby_installer_sha}.tar.gz
-  tar xzf ruby-install.tar.gz
-  rm -f ruby-install.tar.gz
-  cd ruby-install*
-  ./bin/ruby-install --system ruby ${ruby_version} -- --disable-install-doc --with-openssl-dir=$HOME/.rubies/openssl-1.0.2s
-  cd
-  rm -rf /tmp/ruby-install*
-  rm -rf /home/builder/src
-  gem install bundler -v ${bundler_version} --no-rdoc --no-ri
 }
 
 function installtrustedcertificateauthorities() {
@@ -130,7 +99,6 @@ updatenode
 genlocale
 builderuser
 installtrustedcertificateauthorities
-installrubynew
-#export -f installruby
-#su builder -c installruby --preserve-environment
+export -f installruby
+su builder -c installruby
 aptcleanup
