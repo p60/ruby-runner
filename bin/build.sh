@@ -6,6 +6,7 @@ function aptspeedup() {
     echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
 }
 
+
 function noautostart() {
     echo "exit 101" > /usr/sbin/policy-rc.d
 }
