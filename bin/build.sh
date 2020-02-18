@@ -48,7 +48,7 @@ function updatenode() {
     npm install -g npm@5.3.0
     npm install -g n@2.1.0
     npm install -g yarn@0.17.9
-    n 5.4.1
+    n 8.9.1
 }
 
 function linknode() {
