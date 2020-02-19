@@ -39,13 +39,18 @@ function dependencies() {
             libsqlite3-dev  \
             libfreetype6    \
             libfontconfig   \
-            nodejs          \
-            npm
+            build-essential
+}
+
+function installnode() {
+  curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  #sudo apt-get install -y npm
 }
 
 function updatenode() {
     npm cache clean -f
-    npm install -g npm@5.3.0
+    #npm install -g npm@5.3.0
     npm install -g n@2.1.0
     npm install -g yarn@0.17.9
     n 8.9.1
@@ -94,6 +99,7 @@ aptspeedup
 noautostart
 aptupgrade
 dependencies
+installnode
 linknode
 updatenode
 genlocale
